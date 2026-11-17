@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Azulejo · Guest Guide Demo</title>
+<meta name="description" content="Demo of an AI guest guide for short-term rentals in Lisbon: quick info, paid extras and a multilingual concierge chat.">
+<meta property="og:title" content="Casa Azulejo · Guest Guide Demo">
+<meta property="og:description" content="Demo of an AI guest guide for short-term rentals: quick info, paid extras and a multilingual concierge chat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0}
+.g-root{--g-bg:216 20% 97%;--g-surface:0 0% 100%;--g-fg:215 27% 15%;--g-muted:214 12% 42%;--g-line:216 22% 89%;--g-accent:218 67% 37%;--g-accent-soft:216 52% 94%;--g-ochre:39 76% 45%;--g-green:140 49% 36%;--g-on-accent:0 0% 100%;--g-banner:215 27% 15%;--g-on-banner:0 0% 100%;background:hsl(var(--g-bg));color:hsl(var(--g-fg));font-family:'Work Sans',system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.5;min-height:100vh}
+@media (prefers-color-scheme:dark){.g-root{--g-bg:216 26% 9%;--g-surface:216 26% 13%;--g-fg:216 28% 93%;--g-muted:215 15% 66%;--g-line:216 22% 21%;--g-accent:218 72% 75%;--g-accent-soft:217 32% 18%;--g-ochre:39 72% 58%;--g-green:140 44% 56%;--g-on-accent:216 26% 9%;--g-banner:216 28% 93%;--g-on-banner:216 26% 9%}}
+.g-banner{background:hsl(var(--g-banner));color:hsl(var(--g-on-banner));font-size:13px;padding:9px 16px;text-align:center}
+.g-banner a{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.g-wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px;display:grid;gap:22px}
+.g-root h1,.g-root h2{font-family:'Fraunces',Georgia,serif;margin:0;text-wrap:balance}
+.g-root h2{font-weight:500;font-size:20px;margin-bottom:8px}
+.g-hero{position:relative;overflow:hidden;border-radius:14px;background:hsl(218 67% 37%);color:#fff;padding:22px 20px 20px}
+.g-hero::after{content:'';position:absolute;right:-30px;top:-30px;width:150px;height:150px;opacity:.18;background:radial-gradient(circle at 50% 50%,transparent 28%,#fff 29% 33%,transparent 34%),conic-gradient(from 45deg,#fff 0 25%,transparent 0 50%,#fff 0 75%,transparent 0);background-size:50px 50px}
+.g-eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.g-hero h1{font-weight:650;font-size:30px;margin:4px 0 6px}
+.g-hero p{margin:0;opacity:.92;max-width:40ch}
+.g-stay{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:13px}
+.g-stay b{font-weight:600}
+.g-info{background:hsl(var(--g-surface));border:1px solid hsl(var(--g-line));border-radius:12px}
+.g-info details{border-top:1px solid hsl(var(--g-line))}
+.g-info details:first-child{border-top:0}
+.g-info summary{cursor:pointer;list-style:none;padding:13px 16px;display:flex;justify-content:space-between;gap:12px;font-weight:500}
+.g-info summary::-webkit-details-marker{display:none}
+.g-info summary span:last-child{color:hsl(var(--g-muted));font-weight:400;font-size:13px;text-align:right}
+.g-info .g-body{padding:0 16px 14px;color:hsl(var(--g-muted))}
+.g-info .g-body p{margin:0 0 6px}
+.g-root code{font-family:ui-monospace,Menlo,monospace;background:hsl(var(--g-accent-soft));color:hsl(var(--g-fg));padding:1px 6px;border-radius:5px}
+.g-sub{margin:-4px 0 10px;color:hsl(var(--g-muted));font-size:13px}
+.g-extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.g-extras button{font:inherit;text-align:left;display:grid;gap:2px;padding:12px 14px;border-radius:12px;border:1px solid hsl(var(--g-line));background:hsl(var(--g-surface));color:hsl(var(--g-fg));cursor:pointer}
+.g-extras button:hover{border-color:hsl(var(--g-green))}
+.g-name{font-weight:600}
+.g-price{color:hsl(var(--g-green));font-weight:600;font-variant-numeric:tabular-nums}
+.g-what{font-size:13px;color:hsl(var(--g-muted))}
+.g-chat{background:hsl(var(--g-surface));border:1px solid hsl(var(--g-line));border-radius:12px;display:grid}
+.g-chat-head{padding:14px 16px 10px;border-bottom:1px solid hsl(var(--g-line))}
+.g-chat-head h2{margin:0}
+.g-chat-head p{margin:2px 0 0;font-size:13px;color:hsl(var(--g-muted))}
+.g-log{padding:14px 16px;display:grid;gap:10px;max-height:420px;overflow-y:auto;min-width:0}
+.g-msg{max-width:85%;padding:9px 12px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.g-msg.bot{background:hsl(var(--g-accent-soft));justify-self:start;border-bottom-left-radius:4px}
+.g-msg.me{background:hsl(var(--g-accent));color:hsl(var(--g-on-accent));justify-self:end;border-bottom-right-radius:4px}
+.g-msg.handoff{border-left:3px solid hsl(var(--g-ochre))}
+.g-msg.extra{border-left:3px solid hsl(var(--g-green))}
+.g-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 10px}
+.g-chips button{font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid hsl(var(--g-line));background:hsl(var(--g-bg));color:hsl(var(--g-fg));cursor:pointer}
+.g-chips button:hover{border-color:hsl(var(--g-accent))}
+.g-form{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid hsl(var(--g-line))}
+.g-form input{flex:1;min-width:0;font:inherit;padding:10px 12px;border-radius:10px;border:1px solid hsl(var(--g-line));background:hsl(var(--g-bg));color:hsl(var(--g-fg))}
+.g-form button{font:inherit;font-weight:600;padding:10px 16px;border-radius:10px;border:0;background:hsl(var(--g-accent));color:hsl(var(--g-on-accent));cursor:pointer}
+.g-note{font-size:12px;color:hsl(var(--g-muted));padding:0 16px 12px}
+.g-legend{display:flex;gap:14px;flex-wrap:wrap}
+.g-dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.g-host{background:hsl(var(--g-surface));border:2px solid hsl(var(--g-accent));border-radius:14px;padding:20px;display:grid;gap:10px}
+.g-host p{margin:0}
+.g-host ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+.g-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.g-btn{display:inline-flex;align-items:center;font-weight:600;padding:11px 18px;border-radius:10px;text-decoration:none;border:1px solid hsl(var(--g-line));color:hsl(var(--g-fg));background:hsl(var(--g-bg))}
+.g-btn.primary{background:hsl(var(--g-accent));color:hsl(var(--g-on-accent));border-color:transparent}
+.g-footer{font-size:12px;color:hsl(var(--g-muted));text-align:center}
+.g-root :focus-visible{outline:2px solid hsl(var(--g-accent));outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="g-root">
+  <div class="g-banner">Demo of an AI guest guide for short-term rentals. <a href="#for-hosts">Want one for your apartment?</a></div>
+  <main class="g-wrap">
+    <header class="g-hero">
+      <div class="g-eyebrow">Alfama · Lisboa</div>
+      <h1>Welcome to Casa Azulejo</h1>
+      <p>Everything you need for your stay, and a concierge that answers in your language, day or night.</p>
+      <div class="g-stay"><span>Check-in <b>from 15:00</b></span><span>Check-out <b>by 11:00</b></span><span>AL licence <b>12345/AL</b></span></div>
+    </header>
+
+    <section>
+      <h2>Quick info</h2>
+      <div class="g-info">
+        <details><summary><span>Getting in</span><span>Key box</span></summary><div class="g-body"><p>Rua de São Miguel 18, 2nd floor (no lift). Key box left of the green door, code <code>4719</code>.</p><p>The code is active from 15:00 on your arrival day.</p></div></details>
+        <details><summary><span>Wi-Fi</span><span>CasaAzulejo</span></summary><div class="g-body"><p>Network <code>CasaAzulejo</code>, password <code>pasteis2026</code>.</p></div></details>
+        <details><summary><span>From the airport</span><span>~35 min</span></summary><div class="g-body"><p>Metro red line to Alameda, green line to Baixa-Chiado, then tram 28 to Largo do Limoeiro. Taxi or Uber costs about €15–20.</p></div></details>
+        <details><summary><span>House rules</span><span>Quiet after 22:00</span></summary><div class="g-body"><p>No smoking or parties. Quiet hours 22:00–08:00, the neighbours are lovely and the walls are old.</p><p>Rubbish goes to the bins on Largo do Chafariz de Dentro (yellow plastic, blue paper, green glass).</p></div></details>
+        <details><summary><span>Around the corner</span><span>Local tips</span></summary><div class="g-body"><p>Pastéis at Pastelaria Alfama Doce, fado on Rua dos Remédios, sunset at Miradouro de Santa Luzia (4 min walk). Supermarket: Pingo Doce on Rua da Madalena.</p></div></details>
+      </div>
+    </section>
+
+    <section>
+      <h2>Make your stay easier</h2>
+      <p class="g-sub">Tap to request. Ana confirms and sends a payment link.</p>
+      <div class="g-extras" id="extras"></div>
+    </section>
+
+    <section class="g-chat" aria-label="Concierge chat" id="chat">
+      <div class="g-chat-head"><h2>Ask the concierge</h2><p>Write in any language. Anything it can't answer goes straight to Ana, your host.</p></div>
+      <div class="g-log" id="log" aria-live="polite"></div>
+      <div class="g-chips" id="chips"></div>
+      <form class="g-form" id="form"><input id="q" autocomplete="off" placeholder="Type your question…" aria-label="Your question"><button type="submit" id="send">Send</button></form>
+      <div class="g-note g-legend"><span><span class="g-dot" style="background:hsl(var(--g-ochre))"></span>Passed to the host</span><span><span class="g-dot" style="background:hsl(var(--g-green))"></span>Paid extra requested</span></div>
+    </section>
+
+    <section class="g-host" id="for-hosts">
+      <h2>For hosts: get this for your apartment</h2>
+      <p>I'm Lukas, I live in Lisbon and build these guides for short-term rental hosts. Your guests get one link (or a QR code in the flat) with everything about the stay, and a chat that answers in their language at 2 a.m. so you don't have to.</p>
+      <ul>
+        <li>Fewer repeat questions about Wi-Fi, check-in, parking and hot water</li>
+        <li>Answers in English, Spanish, German, French, Portuguese and more</li>
+        <li>Anything it can't solve is forwarded to you</li>
+        <li>Guests can request paid extras like late check-out or transfers</li>
+        <li>Works with Airbnb and Booking: you just paste the link in your welcome message</li>
+      </ul>
+      <p><b>Ready in 48 hours.</b> Already have a PDF welcome book? Send it over and I'll turn it into a demo for your own property, so you can try it before deciding.</p>
+      <div class="g-cta">
+        <a class="g-btn primary" id="wa" target="_blank" rel="noreferrer">WhatsApp Lukas</a>
+        <a class="g-btn" id="mail">Email</a>
+      </div>
+      <p class="g-what">This page is a demo with a fictional apartment. In a real guide the chat runs on AI trained only on your apartment's details.</p>
+    </section>
+
+    <footer class="g-footer">Casa Azulejo (demo) · Host: Ana · Emergency 112</footer>
+  </main>
+</div>
+<script>
+document.getElementById('wa').href='https://wa.me/420607525413?text='+encodeURIComponent('Hi Lukas, I saw the guest guide demo. Could you make one for my apartment?');
+document.getElementById('mail').href='mailto:lukydonner1132@gmail.com?subject='+encodeURIComponent('Guest guide for my apartment');
+
+const LANG_HINTS={
+ es:/\b(dónde|donde|qué|que|cómo|como|puedo|hay|el|la|los|las|por favor|gracias|tengo|vuelo|aparcar|necesito|agua caliente|hola)\b|¿|ñ/i,
+ de:/\b(wo|ist|der|die|das|ich|wir|kann|können|bitte|danke|nicht|gibt|es|flug|parken|nächste|warmwasser|hallo)\b|ß|ä|ü/i,
+ fr:/\b(où|est|le|la|les|je|nous|peux|pouvez|merci|ne|pas|vol|garer|eau|chaude|bonjour|marche)\b|ç|è|ê|à/i,
+ pt:/\b(onde|eu|posso|obrigad[oa]|não|voo|estacionar|água|quente|olá|tem)\b|ã|õ/i,
+ it:/\b(dove|è|il|lo|gli|posso|grazie|non|volo|parcheggio|acqua|calda|ciao|c'è)\b/i,
+ cs:/\b(kde|je|jak|můžu|můžeme|prosím|děkuji|díky|nefunguje|let|parkovat|voda|teplá|ahoj|dobrý den)\b|ř|ě|ů|č/i
+};
+function detectLang(t){let best='en',bs=0;for(const [l,re] of Object.entries(LANG_HINTS)){const s=(t.match(new RegExp(re.source,'gi'))||[]).length;if(s>bs){best=l;bs=s}}return best}
+const TOPICS=[
+{re:/i'd like|request|book|reserv|quiero|quisiera|möchte|buchen|je voudrais|réserver|gostaria|quero|vorrei|prenotare|chtěl|chtěla|objednat|rezerv/i,kind:'extra',a:{
+en:"Done! I've sent your request to Ana. She'll confirm availability and send you a payment link shortly.",
+es:'¡Listo! He enviado tu solicitud a Ana. Ella confirmará la disponibilidad y te enviará un enlace de pago en breve.',
+de:'Erledigt! Ich habe deine Anfrage an Ana geschickt. Sie bestätigt die Verfügbarkeit und schickt dir gleich einen Zahlungslink.',
+fr:"C'est fait ! J'ai transmis ta demande à Ana. Elle confirme la disponibilité et t'envoie un lien de paiement très vite.",
+pt:'Feito! Enviei o teu pedido à Ana. Ela confirma a disponibilidade e envia-te um link de pagamento em breve.',
+it:'Fatto! Ho inviato la tua richiesta ad Ana. Confermerà la disponibilità e ti manderà a breve un link di pagamento.',
+cs:'Hotovo! Poslal jsem žádost Aně. Potvrdí dostupnost a brzy ti pošle odkaz na platbu.'}},
+{re:/wi-?fi|internet|password|contraseña|passwort|mot de passe|senha|heslo/i,a:{
+en:'Wi-Fi network: CasaAzulejo, password: pasteis2026.',es:'Red Wi-Fi: CasaAzulejo, contraseña: pasteis2026.',de:'WLAN: CasaAzulejo, Passwort: pasteis2026.',fr:'Wi-Fi : CasaAzulejo, mot de passe : pasteis2026.',pt:'Rede Wi-Fi: CasaAzulejo, senha: pasteis2026.',it:'Rete Wi-Fi: CasaAzulejo, password: pasteis2026.',cs:'Wi-Fi: CasaAzulejo, heslo: pasteis2026.'}},
+{re:/flight|late|check.?out|leave|vuelo|salida|flug|abreise|spät|vol|départ|voo|saída|volo|partenza|odlet|odjezd|letadlo|let v/i,a:{
+en:"Check-out is at 11:00, but you can leave your luggage in the entrance cupboard until 18:00 for free. If you'd rather stay longer, late check-out until 13:00 is €20, and a private airport transfer is €30. Shall I request either?",
+es:'La salida es a las 11:00, pero puedes dejar el equipaje gratis en el armario de la entrada hasta las 18:00. Si prefieres quedarte más, la salida tardía hasta las 13:00 cuesta 20 € y el traslado privado al aeropuerto 30 €. ¿Te reservo alguno?',
+de:'Check-out ist um 11:00, dein Gepäck kannst du aber kostenlos bis 18:00 im Schrank am Eingang lassen. Späterer Check-out bis 13:00 kostet 20 €, ein privater Flughafentransfer 30 €. Soll ich etwas davon anfragen?',
+fr:"Le départ est à 11h00, mais tu peux laisser tes bagages gratuitement dans le placard de l'entrée jusqu'à 18h00. Départ tardif jusqu'à 13h00 : 20 €, transfert privé vers l'aéroport : 30 €. Je t'en réserve un ?",
+pt:'O check-out é às 11:00, mas podes deixar a bagagem no armário da entrada até às 18:00, grátis. Check-out tardio até às 13:00 custa 20 € e o transfer privado para o aeroporto 30 €. Queres que peça algum?',
+it:"Il check-out è alle 11:00, ma puoi lasciare i bagagli gratis nell'armadio all'ingresso fino alle 18:00. Il late check-out fino alle 13:00 costa 20 €, il transfer privato per l'aeroporto 30 €. Te ne prenoto uno?",
+cs:'Odhlášení je v 11:00, ale zavazadla můžeš zdarma nechat ve skříni u vchodu do 18:00. Pozdní odjezd do 13:00 stojí 20 € a soukromý odvoz na letiště 30 €. Mám jedno z toho objednat?'}},
+{re:/early|arrive|check.?in|temprano|llegada|früh|ankunft|tôt|arrivée|cedo|chegada|presto|arrivo|dřív|příjezd|přílet/i,a:{
+en:'Check-in is from 15:00 with the key box. Early check-in from 12:00 is €20 and Ana confirms it. You can also drop your luggage from 11:00 for free.',
+es:'El check-in es desde las 15:00 con la caja de llaves. El check-in temprano desde las 12:00 cuesta 20 € y Ana lo confirma. También puedes dejar el equipaje gratis desde las 11:00.',
+de:'Check-in ab 15:00 über die Schlüsselbox. Früher Check-in ab 12:00 kostet 20 €, Ana bestätigt ihn. Gepäck kannst du ab 11:00 kostenlos abstellen.',
+fr:"L'arrivée se fait à partir de 15h00 avec la boîte à clés. L'arrivée anticipée dès 12h00 coûte 20 €, Ana la confirme. Tu peux aussi déposer tes bagages gratuitement dès 11h00.",
+pt:'O check-in é a partir das 15:00 com a caixa de chaves. Check-in antecipado a partir das 12:00 custa 20 € e a Ana confirma. Também podes deixar a bagagem grátis a partir das 11:00.',
+it:"Il check-in è dalle 15:00 con la cassetta delle chiavi. L'early check-in dalle 12:00 costa 20 € e lo conferma Ana. Puoi anche lasciare i bagagli gratis dalle 11:00.",
+cs:'Příjezd je od 15:00 přes schránku na klíče. Dřívější příjezd od 12:00 stojí 20 € a Ana ho potvrdí. Zavazadla můžeš zdarma nechat už od 11:00.'}},
+{re:/park|aparcar|coche|parken|auto|garer|voiture|estacionar|carro|parcheggi|macchina|parkovat|parkování/i,a:{
+en:"There's no parking at the apartment, Alfama streets are for residents only. The nearest car park is Parque Campo das Cebolas, about 6 minutes' walk, roughly €20–25 per 24 h.",
+es:'No hay aparcamiento en el apartamento; las calles de Alfama son solo para residentes. El parking más cercano es Parque Campo das Cebolas, a unos 6 minutos a pie, unos 20–25 € por 24 h.',
+de:'Am Apartment gibt es keinen Parkplatz, die Straßen in Alfama sind nur für Anwohner. Das nächste Parkhaus ist Parque Campo das Cebolas, ca. 6 Minuten zu Fuß, etwa 20–25 € pro 24 h.',
+fr:"Pas de parking à l'appartement, les rues d'Alfama sont réservées aux résidents. Le parking le plus proche est Parque Campo das Cebolas, à 6 minutes à pied, environ 20–25 € les 24 h.",
+pt:'Não há estacionamento no apartamento; as ruas de Alfama são só para residentes. O parque mais próximo é o Parque Campo das Cebolas, a cerca de 6 minutos a pé, uns 20–25 € por 24 h.',
+it:"Non c'è parcheggio all'appartamento, le strade di Alfama sono solo per residenti. Il più vicino è il Parque Campo das Cebolas, a circa 6 minuti a piedi, circa 20–25 € per 24 h.",
+cs:'U bytu se parkovat nedá, ulice v Alfamě jsou jen pro rezidenty. Nejbližší parkoviště je Parque Campo das Cebolas, asi 6 minut pěšky, zhruba 20–25 € za 24 h.'}},
+{re:/supermar|shop|grocer|tienda|compras|einkauf|lebensmittel|courses|magasin|mercado|negozio|spesa|obchod|nákup|potraviny/i,a:{
+en:'The nearest supermarket is Pingo Doce on Rua da Madalena, 8 minutes on foot, open 08:00–21:00.',
+es:'El supermercado más cercano es Pingo Doce en Rua da Madalena, a 8 minutos a pie, abierto de 08:00 a 21:00.',
+de:'Der nächste Supermarkt ist Pingo Doce in der Rua da Madalena, 8 Minuten zu Fuß, geöffnet 08:00–21:00.',
+fr:'Le supermarché le plus proche est Pingo Doce, Rua da Madalena, à 8 minutes à pied, ouvert de 8h00 à 21h00.',
+pt:'O supermercado mais próximo é o Pingo Doce na Rua da Madalena, a 8 minutos a pé, aberto das 08:00 às 21:00.',
+it:'Il supermercato più vicino è Pingo Doce in Rua da Madalena, a 8 minuti a piedi, aperto dalle 08:00 alle 21:00.',
+cs:'Nejbližší supermarket je Pingo Doce v ulici Rua da Madalena, 8 minut pěšky, otevřeno 08:00–21:00.'}},
+{re:/hot water|shower|boiler|agua caliente|ducha|warmwasser|dusche|eau chaude|douche|chauffe|água quente|duche|acqua calda|doccia|teplá voda|sprcha|bojler/i,kind:'handoff',a:{
+en:"The boiler is in the bathroom cupboard. Please check that the switch shows a red light; after a long shower it needs about 30 minutes to reheat. I've also let Ana know, in case it still doesn't work.",
+es:'El calentador está en el armario del baño. Comprueba que el interruptor tenga la luz roja encendida; tras una ducha larga necesita unos 30 minutos. También he avisado a Ana por si sigue sin funcionar.',
+de:'Der Boiler ist im Badezimmerschrank. Bitte prüfe, ob das rote Licht am Schalter leuchtet; nach langem Duschen braucht er ca. 30 Minuten. Ich habe Ana auch Bescheid gegeben, falls es weiterhin nicht geht.',
+fr:"Le chauffe-eau est dans le placard de la salle de bain. Vérifie que le voyant rouge est allumé ; après une longue douche, il lui faut environ 30 minutes. J'ai aussi prévenu Ana au cas où ça ne marcherait toujours pas.",
+pt:'O esquentador está no armário da casa de banho. Confirma que o interruptor tem a luz vermelha acesa; depois de um duche longo precisa de uns 30 minutos. Também avisei a Ana, caso continue sem funcionar.',
+it:"Lo scaldabagno è nell'armadio del bagno. Controlla che la spia rossa sia accesa; dopo una doccia lunga servono circa 30 minuti. Ho avvisato anche Ana, nel caso non funzioni ancora.",
+cs:'Bojler je ve skříni v koupelně. Zkontroluj, že na vypínači svítí červené světlo; po dlouhé sprše potřebuje asi 30 minut. Pro jistotu jsem dal vědět i Aně.'}},
+{re:/airport|aeropuerto|flughafen|aéroport|aeroporto|letiště|metro|taxi|uber/i,a:{
+en:'From the airport: metro red line to Alameda, green line to Baixa-Chiado, then tram 28 to Largo do Limoeiro (about 35 min). A taxi or Uber is about €15–20. Or Ana can arrange a private transfer for €30.',
+es:'Desde el aeropuerto: metro línea roja hasta Alameda, línea verde hasta Baixa-Chiado y tranvía 28 hasta Largo do Limoeiro (unos 35 min). Un taxi o Uber cuesta unos 15–20 €. O Ana puede organizar un traslado privado por 30 €.',
+de:'Vom Flughafen: Metro rote Linie bis Alameda, grüne Linie bis Baixa-Chiado, dann Tram 28 bis Largo do Limoeiro (ca. 35 Min.). Taxi oder Uber kostet ca. 15–20 €. Oder Ana organisiert einen privaten Transfer für 30 €.',
+fr:"Depuis l'aéroport : métro ligne rouge jusqu'à Alameda, ligne verte jusqu'à Baixa-Chiado, puis tram 28 jusqu'à Largo do Limoeiro (environ 35 min). Un taxi ou Uber coûte environ 15–20 €. Ana peut aussi organiser un transfert privé pour 30 €.",
+pt:'Do aeroporto: metro linha vermelha até Alameda, linha verde até Baixa-Chiado e elétrico 28 até Largo do Limoeiro (cerca de 35 min). Táxi ou Uber custa uns 15–20 €. Ou a Ana pode marcar um transfer privado por 30 €.',
+it:"Dall'aeroporto: metro linea rossa fino ad Alameda, linea verde fino a Baixa-Chiado, poi tram 28 fino a Largo do Limoeiro (circa 35 min). Taxi o Uber costano circa 15–20 €. Oppure Ana può organizzare un transfer privato a 30 €.",
+cs:'Z letiště: metro červená linka do Alameda, zelená do Baixa-Chiado a pak tramvaj 28 na Largo do Limoeiro (asi 35 min). Taxi nebo Uber stojí kolem 15–20 €. Nebo ti Ana zařídí soukromý odvoz za 30 €.'}},
+{re:/\beat\b|restaurant|dinner|fado|food|comer|cenar|essen|abendessen|manger|dîner|jantar|mangiare|cena|jídlo|večeře|restaurace|tip/i,a:{
+en:"For pastéis de nata try Pastelaria Alfama Doce. For dinner with live fado, the small tascas on Rua dos Remédios are lovely. And don't miss sunset at Miradouro de Santa Luzia, 4 minutes' walk.",
+es:'Para pastéis de nata, Pastelaria Alfama Doce. Para cenar con fado en directo, las tascas de Rua dos Remédios. Y no te pierdas el atardecer en el Miradouro de Santa Luzia, a 4 minutos.',
+de:'Für Pastéis de Nata: Pastelaria Alfama Doce. Zum Abendessen mit Live-Fado: die kleinen Tascas in der Rua dos Remédios. Und der Sonnenuntergang am Miradouro de Santa Luzia, 4 Minuten zu Fuß, ist ein Muss.',
+fr:'Pour les pastéis de nata : Pastelaria Alfama Doce. Pour dîner avec du fado : les petites tascas de la Rua dos Remédios. Et ne rate pas le coucher de soleil au Miradouro de Santa Luzia, à 4 minutes.',
+pt:'Para pastéis de nata, a Pastelaria Alfama Doce. Para jantar com fado ao vivo, as tascas da Rua dos Remédios. E não percas o pôr do sol no Miradouro de Santa Luzia, a 4 minutos.',
+it:'Per i pastéis de nata: Pastelaria Alfama Doce. Per cena con fado dal vivo: le piccole tascas in Rua dos Remédios. E non perderti il tramonto al Miradouro de Santa Luzia, a 4 minuti.',
+cs:'Na pastéis de nata zajdi do Pastelaria Alfama Doce. Na večeři s živým fadem jsou skvělé malé tascas v Rua dos Remédios. A nenech si ujít západ slunce na Miradouro de Santa Luzia, 4 minuty pěšky.'}},
+{re:/trash|rubbish|garbage|basura|müll|poubelle|lixo|spazzatura|odpad|koš/i,a:{
+en:'Rubbish goes to the bins on Largo do Chafariz de Dentro, 2 minutes away: yellow for plastic, blue for paper, green for glass.',
+es:'La basura va a los contenedores de Largo do Chafariz de Dentro, a 2 minutos: amarillo plástico, azul papel, verde vidrio.',
+de:'Müll kommt in die Container am Largo do Chafariz de Dentro, 2 Minuten entfernt: gelb Plastik, blau Papier, grün Glas.',
+fr:'Les poubelles sont sur le Largo do Chafariz de Dentro, à 2 minutes : jaune plastique, bleu papier, vert verre.',
+pt:'O lixo vai para os contentores no Largo do Chafariz de Dentro, a 2 minutos: amarelo plástico, azul papel, verde vidro.',
+it:'I rifiuti vanno nei cassonetti di Largo do Chafariz de Dentro, a 2 minuti: giallo plastica, blu carta, verde vetro.',
+cs:'Odpadky patří do kontejnerů na Largo do Chafariz de Dentro, 2 minuty od bytu: žlutý plast, modrý papír, zelený sklo.'}}
+];
+const FALLBACK={
+en:"Good question! I don't have that in my notes, so I've forwarded it to Ana, your host. She'll reply here shortly.",
+es:'¡Buena pregunta! No lo tengo en mis notas, así que se lo he pasado a Ana, tu anfitriona. Te responderá aquí en breve.',
+de:'Gute Frage! Das steht nicht in meinen Infos, deshalb habe ich es an Ana, deine Gastgeberin, weitergeleitet. Sie antwortet dir gleich hier.',
+fr:"Bonne question ! Je n'ai pas cette info, alors je l'ai transmise à Ana, ton hôte. Elle te répond ici très vite.",
+pt:'Boa pergunta! Não tenho isso nas minhas notas, por isso reencaminhei para a Ana, a tua anfitriã. Ela responde aqui em breve.',
+it:"Bella domanda! Non ce l'ho nelle mie note, quindi l'ho inoltrata ad Ana, la tua host. Ti risponderà qui a breve.",
+cs:'Dobrá otázka! Tohle v podkladech nemám, tak jsem to přeposlal Aně, tvé hostitelce. Brzy ti tady odpoví.'};
+function answer(q){const l=detectLang(q);for(const t of TOPICS){if(t.re.test(q))return{text:t.a[l],kind:t.kind||'normal'}}return{text:FALLBACK[l],kind:'handoff'}}
+
+const log=document.getElementById('log');let busy=false;
+function add(text,who,kind){const d=document.createElement('div');d.className='g-msg '+who+(kind&&kind!=='normal'?' '+kind:'');d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+add("Olá! I'm the Casa Azulejo concierge. Ask me anything about your stay, in any language.",'bot');
+function ask(t){t=t.trim();if(!t||busy)return;add(t,'me');const p=add('…','bot');busy=true;document.getElementById('q').value='';const a=answer(t);setTimeout(()=>{p.textContent=a.text;if(a.kind!=='normal')p.classList.add(a.kind);busy=false;log.scrollTop=log.scrollHeight},700)}
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();ask(document.getElementById('q').value)});
+['Our flight leaves at 6pm, what can we do?','¿Dónde puedo aparcar?','Wo ist der nächste Supermarkt?',"L'eau chaude ne marche pas",'Onde jantar com fado?'].forEach(c=>{const b=document.createElement('button');b.type='button';b.textContent=c;b.onclick=()=>ask(c);document.getElementById('chips').appendChild(b)});
+[{name:'Late check-out',price:'€20',what:'Stay until 13:00',ask:"I'd like the late check-out until 13:00, please."},{name:'Early check-in',price:'€20',what:'From 12:00',ask:"I'd like early check-in from 12:00, please."},{name:'Airport transfer',price:'€30',what:'Private driver, up to 4',ask:"I'd like to book the airport transfer."},{name:'Welcome basket',price:'€18',what:'Wine, pastéis, cheese',ask:"I'd like the welcome basket, please."}].forEach(x=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span class="g-name"></span><span class="g-price"></span><span class="g-what"></span>';b.children[0].textContent=x.name;b.children[1].textContent=x.price;b.children[2].textContent=x.what;b.onclick=()=>{ask(x.ask);document.getElementById('chat').scrollIntoView({behavior:'smooth',block:'center'})};document.getElementById('extras').appendChild(b)});
+</script>
+</body>
+</html>
